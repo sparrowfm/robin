@@ -1,0 +1,22 @@
+{
+  "name": "@aviary/robin",
+  "version": "1.0.0",
+  "description": "Email forwarding service for chirpy.studio",
+  "main": "src/forwarder.js",
+  "scripts": {
+    "build": "echo 'No build step required'",
+    "deploy": "cd cdk && npx cdk deploy --require-approval never",
+    "test": "echo 'No tests yet'"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.450.0",
+    "@aws-sdk/client-ses": "^3.450.0",
+    "@aws-sdk/client-ssm": "^3.450.0",
+    "mailparser": "^3.6.5"
+  },
+  "devDependencies": {
+    "aws-cdk": "^2.100.0",
+    "aws-cdk-lib": "^2.100.0",
+    "constructs": "^10.0.0"
+  }
+}
