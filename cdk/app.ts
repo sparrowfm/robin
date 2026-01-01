@@ -14,4 +14,5 @@ new RobinStack(app, `RobinStack${suffix}`, {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: 'us-east-1',
   },
+  environment,
 });

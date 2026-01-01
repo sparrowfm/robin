@@ -7,13 +7,20 @@ import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import * as path from 'path';
 
+export interface RobinStackProps extends cdk.StackProps {
+  environment: string;
+}
+
 export class RobinStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props: RobinStackProps) {
     super(scope, id, props);
+
+    const env = props.environment;
+    const suffix = env === 'prod' ? '-prod' : '';
 
     // S3 bucket for incoming emails
     const emailBucket = new s3.Bucket(this, 'EmailBucket', {
-      bucketName: 'chirpy-robin-emails',
+      bucketName: `chirpy-robin-emails${suffix}`,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
       lifecycleRules: [
         {
@@ -24,7 +31,7 @@ export class RobinStack extends cdk.Stack {
 
     // Lambda function for email forwarding (NodejsFunction bundles dependencies)
     const forwarderFn = new NodejsFunction(this, 'ForwarderFunction', {
-      functionName: 'robin-email-forwarder',
+      functionName: `robin-email-forwarder${suffix}`,
       runtime: Runtime.NODEJS_18_X,
       entry: path.join(__dirname, '../src/forwarder.js'),
       handler: 'handler',
